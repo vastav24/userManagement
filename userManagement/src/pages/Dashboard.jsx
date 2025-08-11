@@ -182,6 +182,11 @@ const Dashboard = () => {
             </div>
           </div>
 
+          <div className="mb-2">
+            <span className="font-medium">
+              {filteredUsers?.length || 0} Users
+            </span>
+          </div>
           <div className="overflow-x-auto rounded-lg border border-gray-200">
             <Table
               data={filteredUsers}
