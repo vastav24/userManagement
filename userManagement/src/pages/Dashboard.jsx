@@ -7,28 +7,43 @@ import Swal from "sweetalert2";
 import { confirmDelete } from "../components/confirmDelete";
 import { showAlert } from "../components/ShowAlert";
 import Loader from "../components/Loader";
+import Select from "react-select";
 
 const Dashboard = () => {
   const [search, setSearch] = useState("");
-  const [roleFilter, setRoleFilter] = useState("all");
+  const [filterdValue, setFilterdValue] = useState({
+    city: "",
+    company: "",
+  });
   const [loading, setLoading] = useState(false);
   const usersLists = useUserStore((state) => state.usersLists);
   const setUsersLists = useUserStore((state) => state.setUsersLists);
   const deleteUser = useUserStore((state) => state.deleteUser);
+
   const navigate = useNavigate();
 
   const filteredUsers = useMemo(() => {
     if (!Array.isArray(usersLists)) return [];
 
-    return usersLists.filter((u) => {
-      const name = u?.name?.toLowerCase() || "";
+    return usersLists.filter((obj) => {
+      const name = obj?.name?.toLowerCase() || "";
+      const city = obj?.address?.city?.toLowerCase() || "";
+      const company = obj?.company?.name?.toLowerCase() || "";
       const searchTerm = search?.toLowerCase() || "";
-      const matchesSearch = name.includes(searchTerm);
-      const matchesRole = roleFilter === "all" || u?.role === roleFilter;
 
-      return matchesSearch && matchesRole;
+      const matchesSearch = name.includes(searchTerm);
+
+      const filterCity = filterdValue?.city?.toLowerCase() || "";
+      const matchCity = filterCity ? city.includes(filterCity) : true;
+
+      const filterCompany = filterdValue?.company?.toLowerCase() || "";
+      const matchCompany = filterCompany
+        ? company.includes(filterCompany)
+        : true;
+
+      return matchesSearch && matchCity && matchCompany;
     });
-  }, [usersLists, search, roleFilter]);
+  }, [usersLists, search, filterdValue]);
 
   const handleView = (user) => {
     navigate(`/view-user/${user?.id}`);
@@ -61,13 +76,13 @@ const Dashboard = () => {
 
         setTimeout(() => {
           setLoading(false);
-        }, 2000);
+        }, 1000);
       } catch (error) {
         console.error("Failed to fetch users:", error);
         showAlert("Failed to fetch users:", "error");
         setTimeout(() => {
           setLoading(false);
-        }, 2000);
+        }, 1000);
       }
     };
     if (usersLists?.length === 0) {
@@ -76,7 +91,36 @@ const Dashboard = () => {
     }
   }, [usersLists]);
 
-  return (
+  const companyOptions = useMemo(() => {
+    return usersLists?.map((obj) => {
+      return {
+        value: obj?.company?.name,
+        label: obj?.company?.name,
+      };
+    });
+  }, [usersLists]);
+
+  const addressOptions = useMemo(() => {
+    return usersLists?.map((obj) => {
+      return {
+        value: obj?.address?.city,
+        label: obj?.address?.city,
+      };
+    });
+  }, [usersLists]);
+
+  const handleOnFilter = (e) => {
+    setFilterdValue((pre) => {
+      return {
+        ...pre,
+        [e.name]: e?.target?.value || "",
+      };
+    });
+  };
+
+  return loading ? (
+    <Loader className={"w-10 text-violet-500 "} />
+  ) : (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <header className="bg-white shadow-sm px-6 py-4 sticky top-0 z-10">
         <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
@@ -101,39 +145,41 @@ const Dashboard = () => {
               placeholder="🔍 Search users.."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full sm:w-2/3 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+              className="w-full  px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
             />
 
-            <select
-              value={roleFilter}
-              onChange={(e) => setRoleFilter(e.target.value)}
-              className="w-full sm:w-1/3 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-            >
-              <option value="all">All Roles</option>
-              <option value="Admin">Admin</option>
-              <option value="Manager">Manager</option>
-              <option value="User">User</option>
-            </select>
-            <select
-              value={roleFilter}
-              onChange={(e) => setRoleFilter(e.target.value)}
-              className="w-full sm:w-1/3 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-            >
-              <option value="all">All Roles</option>
-              <option value="Admin">Admin</option>
-              <option value="Manager">Manager</option>
-              <option value="User">User</option>
-            </select>
-            <select
-              value={roleFilter}
-              onChange={(e) => setRoleFilter(e.target.value)}
-              className="w-full sm:w-1/3 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-            >
-              <option value="all">All Roles</option>
-              <option value="Admin">Admin</option>
-              <option value="Manager">Manager</option>
-              <option value="User">User</option>
-            </select>
+            <div className="sm-w-1/2 w-full">
+              <Select
+                placeholder="Companies"
+                name="company"
+                closeMenuOnSelect={true}
+                options={companyOptions}
+                isClearable={true}
+                onChange={(e) => {
+                  let event = {
+                    name: "company",
+                    target: e,
+                  };
+                  handleOnFilter(event);
+                }}
+              />
+            </div>
+            <div className="sm-w-1/2 w-full">
+              <Select
+                placeholder="City"
+                name="city"
+                closeMenuOnSelect={true}
+                options={addressOptions}
+                isClearable={true}
+                onChange={(e) => {
+                  let event = {
+                    name: "city",
+                    target: e,
+                  };
+                  handleOnFilter(event);
+                }}
+              />
+            </div>
           </div>
 
           <div className="overflow-x-auto rounded-lg border border-gray-200">
@@ -148,8 +194,6 @@ const Dashboard = () => {
           </div>
         </div>
       </main>
-
-      <Loader className={"w-10 text-violet-500 "} />
     </div>
   );
 };
