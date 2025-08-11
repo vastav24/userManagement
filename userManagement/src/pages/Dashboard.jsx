@@ -131,7 +131,7 @@ const Dashboard = () => {
           <div className="mb-6 justify-end flex">
             <button
               type="button"
-              className=" cursor-pointer text-white hover:text-white bg-violet-500 hover:bg-indigo-500 transition font-medium rounded text-sm13 px-2.5 py-0.5"
+              className="cursor-pointer bg-blue-600  text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
               onClick={() => {
                 navigate("/add-user");
               }}

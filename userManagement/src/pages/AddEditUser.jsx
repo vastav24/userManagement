@@ -35,6 +35,7 @@ const AddEditUser = () => {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
+    enableReinitialize: true,
     onSubmit: (values, { resetForm }) => {
       const user = {
         ...values,
@@ -55,6 +56,7 @@ const AddEditUser = () => {
       }, 0);
     },
   });
+
   useEffect(() => {
     const user = usersLists?.find((obj) => String(obj?.id) === String(id));
 
@@ -74,8 +76,10 @@ const AddEditUser = () => {
     }
   }, [id]);
 
+  console.log(formik.dirty, "adad");
+
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className="min-h-screen overflow-y bg-gray-100 flex flex-col">
       <header className="bg-white shadow-sm px-6 py-4 sticky top-0 z-10">
         <h1 className="text-2xl font-bold text-gray-800">
           {" "}
@@ -127,7 +131,7 @@ const AddEditUser = () => {
           <div className="text-right flex justify-end gap-2">
             <button
               type="button"
-              className="border cursor-pointer border-gray-300 hover:border-indigo-500 text-gray hover:text-white bg-white hover:bg-indigo-500 transition font-medium rounded text-sm13 px-2.5 py-0.5 mr-2"
+              className="cursor-pointer bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400   transition"
               onClick={() => {
                 navigate("/");
               }}
@@ -136,7 +140,14 @@ const AddEditUser = () => {
             </button>
             <button
               type="submit"
-              className="cursor-pointer text-white hover:text-white bg-violet-500 hover:bg-indigo-500 transition font-medium rounded text-sm13 px-2.5 py-0.5"
+              disabled={!formik.dirty}
+              className={` cursor-pointer px-4 py-2 rounded-lg text-white transition 
+          ${
+            formik.dirty && formik.isValid
+              ? "bg-blue-600 hover:bg-blue-700"
+              : "bg-gray-400"
+          }
+        `}
             >
               {id ? "Update" : "Add"} user
             </button>

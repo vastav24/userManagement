@@ -29,7 +29,8 @@ const ViewUser = () => {
           <h1 className="text-xl font-bold text-gray-800">User Details</h1>
           <button
             onClick={() => navigate(-1)}
-            className="border cursor-pointer border-gray-300 hover:border-indigo-500 text-gray hover:text-white bg-white hover:bg-indigo-500 transition font-medium rounded text-sm13 px-2.5 py-0.5 mr-2"
+            // className="border cursor-pointer border-gray-300 hover:border-indigo-500 text-gray hover:text-white bg-white hover:bg-indigo-500 transition font-medium rounded text-sm13 px-2.5 py-0.5 mr-2"
+            className="cursor-pointer bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400   transition"
           >
             Back
           </button>
