@@ -11,15 +11,17 @@ const AddEditUser = () => {
   const usersLists = useUserStore((state) => state.usersLists);
   const navigate = useNavigate();
   const { id } = useParams();
+  const user = usersLists?.find((obj) => String(obj?.id) === String(id));
 
   let initialValues = {
-    name: "",
-    username: "",
-    email: "",
-    address: "",
-    phone: "",
-    website: "",
-    company: "",
+    name: user?.name || "",
+    username: user?.username || "",
+    email: user?.email || "",
+    address: user?.address?.city || "",
+    phone: user?.phone || "",
+    website: user?.website || "",
+    company: user?.company?.name || "",
+    id: user?.id || "",
   };
 
   let validationSchema = Yup.object({
@@ -76,8 +78,6 @@ const AddEditUser = () => {
     }
   }, [id]);
 
-  console.log(formik.dirty, "adad");
-
   return (
     <div className="min-h-screen overflow-y bg-gray-100 flex flex-col">
       <header className="bg-white shadow-sm px-6 py-4 sticky top-0 z-10">
@@ -92,7 +92,7 @@ const AddEditUser = () => {
           onSubmit={formik.handleSubmit}
           className="bg-white shadow rounded p-6 space-y-4 w-full max-w-2xl mx-auto"
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
             {[
               { name: "name", label: "Name" },
               { name: "username", label: "Username" },
@@ -142,11 +142,11 @@ const AddEditUser = () => {
               type="submit"
               disabled={!formik.dirty}
               className={` cursor-pointer px-4 py-2 rounded-lg text-white transition 
-          ${
-            formik.dirty && formik.isValid
-              ? "bg-blue-600 hover:bg-blue-700"
-              : "bg-gray-400"
-          }
+                    ${
+                      formik.dirty
+                        ? "bg-blue-600 hover:bg-blue-700"
+                        : "bg-gray-400"
+                    }
         `}
             >
               {id ? "Update" : "Add"} user
