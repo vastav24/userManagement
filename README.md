@@ -18,6 +18,7 @@ This project is built using **React** with **Vite** for fast and efficient devel
 
 git clone https://github.com/vastav24/userManagement.git
 cd userManagement
+used branch -> "main"
 
 2. Install dependencies
 
