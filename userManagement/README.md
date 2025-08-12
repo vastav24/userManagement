@@ -1,12 +1,51 @@
-# React + Vite
+# React + Vite Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is built using **React** with **Vite** for fast and efficient development.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📋 Requirements
 
-## Expanding the ESLint configuration
+- **Node.js**: version 18 or higher  
+  You can check your version with:
+  ```bash
+  node -v
+  ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠 Installation & Setup
+
+1. Clone the repository
+
+git clone https://github.com/vastav24/userManagement.git
+cd userManagement
+
+2. Install dependencies
+
+npm install -f
+
+3. Start development server
+
+npm run dev
+
+4. Build for production (optional)
+
+npm run build
+
+## Project structure
+
+userManagement/
+├── public/ # Static assets (favicon, images, etc.)
+├── src/
+│ ├── assets/ # Images, styles, fonts, and other assets
+│ ├── components/ # Reusable UI components
+│ ├── pages/ # Application pages
+│ ├── store/
+│ │ └── store.js # Zustand store for state management
+│ ├── routing/
+│ │ └── AppRoutes.jsx # Page routing definitions
+│ ├── helper.jsx # Utility/helper functions
+│ ├── App.jsx # Main app component
+│ └── main.jsx # Application entry point
+├── index.html # HTML template
+├── package.json # Project metadata and dependencies
+└── vite.config.js # Vite configuration
