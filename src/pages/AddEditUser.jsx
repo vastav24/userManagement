@@ -5,6 +5,7 @@ import useUserStore from "../store/store";
 import { showAlert } from "../components/ShowAlert";
 import { useNavigate, useParams } from "react-router-dom";
 import { validationSchema } from "../validation";
+import CommonButton from "../components/CommonButton";
 
 const AddEditUser = () => {
   const updateUser = useUserStore((state) => state.updateUser);
@@ -122,28 +123,19 @@ const AddEditUser = () => {
           </div>
 
           <div className="text-right flex justify-end gap-2">
-            <button
+            <CommonButton
               type="button"
-              className="cursor-pointer bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400   transition"
               onClick={() => {
                 navigate("/");
               }}
-            >
-              Cancle
-            </button>
-            <button
+              label={`Cancle`}
+              className="cursor-pointer bg-gray-200 !text-gray-700 px-4 py-2 rounded-lg border border-gray-200 hover:bg-white hover:border-gray-500 hover:border focus:outline-none  transition"
+            />
+            <CommonButton
+              isDisabled={!formik.dirty}
               type="submit"
-              disabled={!formik.dirty}
-              className={` cursor-pointer px-4 py-2 rounded-lg text-white transition 
-                    ${
-                      formik.dirty
-                        ? "bg-blue-600 hover:bg-blue-700"
-                        : "bg-gray-400"
-                    }
-        `}
-            >
-              {id ? "Update" : "Add"} user
-            </button>
+              label={`${id ? "Update" : "Add"} user`}
+            />
           </div>
         </form>
       </div>

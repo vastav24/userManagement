@@ -8,6 +8,7 @@ import { ConfirmDelete } from "../components/confirmDelete";
 import { showAlert } from "../components/ShowAlert";
 import Loader from "../components/Loader";
 import Select from "react-select";
+import CommonButton from "../components/CommonButton";
 
 const Dashboard = () => {
   const [search, setSearch] = useState("");
@@ -129,15 +130,13 @@ const Dashboard = () => {
       <main className="flex-1 px-4 sm:px-6 lg:px-8 py-6">
         <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
           <div className="mb-6 justify-end flex">
-            <button
-              type="button"
-              className="cursor-pointer bg-blue-600  text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+            <CommonButton
               onClick={() => {
                 navigate("/add-user");
               }}
-            >
-              + Add user
-            </button>
+              type="submit"
+              label={`+ Add user`}
+            />
           </div>
           <div className="flex flex-col sm:flex-row gap-3 mb-6">
             <input
