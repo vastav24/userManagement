@@ -70,3 +70,19 @@ export const userRowRenderer = (user, onView, onEdit, onDelete) => (
     </td>
   </>
 );
+
+export const fileToBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (err) => reject(err);
+  });
+
+export const hobbiesOptions = [
+  { value: "Reading", label: "Reading" },
+  { value: "Traveling", label: "Traveling" },
+  { value: "Gaming", label: "Gaming" },
+  { value: "Cooking", label: "Cooking" },
+  { value: "Sports", label: "Sports" },
+];

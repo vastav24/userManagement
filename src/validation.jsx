@@ -28,9 +28,7 @@ export const validationSchema = () => {
       .min(6, "Too short")
       .max(20, "Too long"),
 
-    website: Yup.string()
-      .url("Website must be a valid URL")
-      .required("Website is required"),
+    website: Yup.string().required("Website is required"),
 
     company: Yup.string()
       .min(2, "Company name must be at least 2 characters")

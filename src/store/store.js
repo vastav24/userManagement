@@ -27,6 +27,13 @@ const useUserStore = create(
         set((state) => ({
           usersLists: state.usersLists.filter((user) => user.id !== userId),
         })),
+
+      removeImageFromUser: (id) =>
+        set((state) => ({
+          usersLists: state?.usersLists?.map((user) =>
+            user?.id === id ? { ...user, profile: "" } : user
+          ),
+        })),
     }),
     {
       name: "user-storage",

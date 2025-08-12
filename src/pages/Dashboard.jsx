@@ -98,7 +98,6 @@ const Dashboard = () => {
           throw new Error(`API error: ${res.status}`);
         }
         const data = await res.json();
-
         setUsersLists(data);
 
         setTimeout(() => {
@@ -186,6 +185,7 @@ const Dashboard = () => {
               {filteredUsers?.length || 0} Users
             </span>
           </div>
+
           <div className="overflow-x-auto rounded-lg border border-gray-200">
             <Table
               data={filteredUsers}
