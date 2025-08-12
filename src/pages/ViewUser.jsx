@@ -39,31 +39,45 @@ const ViewUser = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
           <div>
             <p className="text-gray-500">Name</p>
-            <p className="font-medium">{user.name}</p>
+            <div className="w-full border p-2.5 mt-2 rounded border-gray-300">
+              <p className="font-medium">{user.name}</p>
+            </div>
           </div>
           <div>
             <p className="text-gray-500">Username</p>
-            <p className="font-medium">{user.username}</p>
+            <div className="w-full border p-2.5 mt-2 rounded border-gray-300">
+              <p className="font-medium">{user.username}</p>
+            </div>
           </div>
           <div>
             <p className="text-gray-500">Email</p>
-            <p className="font-medium">{user.email}</p>
+            <div className="w-full border p-2.5 mt-2 rounded border-gray-300">
+              <p className="font-medium">{user.email}</p>
+            </div>
           </div>
           <div>
             <p className="text-gray-500">City</p>
-            <p className="font-medium">{user.address?.city}</p>
+            <div className="w-full border p-2.5 mt-2 rounded border-gray-300">
+              <p className="font-medium">{user.address?.city}</p>
+            </div>
           </div>
           <div>
             <p className="text-gray-500">Phone</p>
-            <p className="font-medium">{user.phone}</p>
+            <div className="w-full border p-2.5 mt-2 rounded border-gray-300">
+              <p className="font-medium">{user.phone}</p>
+            </div>
           </div>
           <div>
             <p className="text-gray-500">Website</p>
-            <p className="font-medium">{user.website}</p>
+            <div className="w-full border p-2.5 mt-2 rounded border-gray-300">
+              <p className="font-medium">{user.website}</p>
+            </div>
           </div>
           <div>
             <p className="text-gray-500">Company</p>
-            <p className="font-medium">{user.company?.name}</p>
+            <div className="w-full border p-2.5 mt-2 rounded border-gray-300">
+              <p className="font-medium">{user.company?.name}</p>
+            </div>
           </div>
         </div>
       </div>
