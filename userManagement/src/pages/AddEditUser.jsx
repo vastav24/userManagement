@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import useUserStore from "../store/store";
@@ -11,7 +11,10 @@ const AddEditUser = () => {
   const usersLists = useUserStore((state) => state.usersLists);
   const navigate = useNavigate();
   const { id } = useParams();
-  const user = usersLists?.find((obj) => String(obj?.id) === String(id));
+
+  const user = useMemo(() => {
+    return usersLists?.find((obj) => String(obj?.id) === String(id));
+  }, [usersLists]);
 
   let initialValues = {
     name: user?.name || "",
