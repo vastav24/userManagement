@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-export function confirmDelete(
+export function ConfirmDelete(
   message = "Are you sure you want to delete this?"
 ) {
   return Swal.fire({

@@ -4,7 +4,7 @@ import Table from "../components/Table";
 import { userRowRenderer, userTableHeaders } from "../helpers";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { confirmDelete } from "../components/confirmDelete";
+import { ConfirmDelete } from "../components/confirmDelete";
 import { showAlert } from "../components/ShowAlert";
 import Loader from "../components/Loader";
 import Select from "react-select";
@@ -19,7 +19,6 @@ const Dashboard = () => {
   const usersLists = useUserStore((state) => state.usersLists);
   const setUsersLists = useUserStore((state) => state.setUsersLists);
   const deleteUser = useUserStore((state) => state.deleteUser);
-
   const navigate = useNavigate();
 
   const filteredUsers = useMemo(() => {
@@ -45,6 +44,24 @@ const Dashboard = () => {
     });
   }, [usersLists, search, filterdValue]);
 
+  const companyOptions = useMemo(() => {
+    return usersLists?.map((obj) => {
+      return {
+        value: obj?.company?.name,
+        label: obj?.company?.name,
+      };
+    });
+  }, [usersLists]);
+
+  const addressOptions = useMemo(() => {
+    return usersLists?.map((obj) => {
+      return {
+        value: obj?.address?.city,
+        label: obj?.address?.city,
+      };
+    });
+  }, [usersLists]);
+
   const handleView = (user) => {
     navigate(`/view-user/${user?.id}`);
   };
@@ -54,13 +71,22 @@ const Dashboard = () => {
   };
 
   const handleDelete = async (user) => {
-    const confirmed = await confirmDelete(
+    const confirmed = await ConfirmDelete(
       "This will permanently delete the user."
     );
     if (confirmed) {
       deleteUser(user?.id);
       showAlert("User has been deleted.", "success");
     }
+  };
+
+  const handleOnFilter = (e) => {
+    setFilterdValue((pre) => {
+      return {
+        ...pre,
+        [e.name]: e?.target?.value || "",
+      };
+    });
   };
 
   useEffect(() => {
@@ -89,37 +115,11 @@ const Dashboard = () => {
       setLoading(true);
       fetchUsers();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usersLists]);
-
-  const companyOptions = useMemo(() => {
-    return usersLists?.map((obj) => {
-      return {
-        value: obj?.company?.name,
-        label: obj?.company?.name,
-      };
-    });
-  }, [usersLists]);
-
-  const addressOptions = useMemo(() => {
-    return usersLists?.map((obj) => {
-      return {
-        value: obj?.address?.city,
-        label: obj?.address?.city,
-      };
-    });
-  }, [usersLists]);
-
-  const handleOnFilter = (e) => {
-    setFilterdValue((pre) => {
-      return {
-        ...pre,
-        [e.name]: e?.target?.value || "",
-      };
-    });
-  };
 
   return loading ? (
-    <Loader className={"w-10 text-violet-500 "} />
+    <Loader className={"w-10 text-blue-600 "} />
   ) : (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <header className="bg-white shadow-sm px-6 py-4 sticky top-0 z-10">

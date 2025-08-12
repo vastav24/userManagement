@@ -1,7 +1,5 @@
 import React from "react";
 
-// src/components/Table.jsx
-
 const Table = ({
   data = [],
   headers = [],
